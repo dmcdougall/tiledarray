@@ -12,10 +12,8 @@ if(ENABLE_ROCM_ERROR_CHECK)
   set (TILEDARRAY_CHECK_ROCM_ERROR 1)
 endif(ENABLE_ROCM_ERROR_CHECK)
 
-# find CUDA toolkit
-# NB CUDAToolkit does NOT have COMPONENTS
-# find_package(CUDAToolkit REQUIRED)
-# 
+find_package(hip REQUIRED)
+
 # foreach (library cublas;nvToolsExt)
 #   if (NOT TARGET CUDA::${library})
 #     message(FATAL_ERROR "CUDA::${library} not found")
