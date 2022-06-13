@@ -127,6 +127,14 @@ if(ENABLE_CUDA)
   add_feature_info(CUDA_ERROR_CHECK ENABLE_CUDA_ERROR_CHECK "Checks CUDA Error")
 endif()
 
+option(ENABLE_ROCM "Enable use of HIP with TiledArray" OFF)
+add_feature_info(ROCM ENABLE_ROCM "AMD ROCm support for GPU")
+
+if(ENABLE_ROCM)
+  option(ENABLE_ROCM_ERROR_CHECK "TiledArray will always check errors in ROCm calls" ON)
+  add_feature_info(ROCM_ERROR_CHECK ENABLE_ROCM_ERROR_CHECK "Checks ROCm Error")
+endif()
+
 option(ENABLE_GPERFTOOLS "Enable linking with Gperftools" OFF)
 add_feature_info(GPERFTOOLS ENABLE_GPERFTOOLS "Google Performance Tools provide fast memory allocation and performance profiling")
 option(ENABLE_TCMALLOC_MINIMAL "Enable linking with tcmalloc_minimal" OFF)
@@ -303,6 +311,11 @@ add_custom_target(External-tiledarray)
 if(ENABLE_CUDA)
   include(external/cuda.cmake)
 endif()
+
+if(ENABLE_ROCM)
+  include(external/rocm.cmake)
+endif()
+
 include(FindOrFetchMADWorld)
 detect_MADNESS_configuration()
 include(external/eigen.cmake)
