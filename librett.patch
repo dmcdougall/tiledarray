@@ -1,0 +1,30 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fe0e586..460abe6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.10)
++cmake_minimum_required(VERSION 3.22.2)
+ project(librett)
+ set(CMAKE_STATIC_LIBRARY_PREFIX "")
+ 
+@@ -77,6 +77,7 @@ if(ENABLE_HIP)
+   #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DHIP -fPIC -D__HIP_PLATFORM_HCC__ -D__HIP_ROCclr__")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -DHIP")
+   set(CMAKE_HIP_FLAGS "${CMAKE_HIP_FLAGS} -O3 -DHIP -D_FORCE_INLINES")
++  find_package(HIP REQUIRED)
+ endif(ENABLE_HIP)
+ 
+ #enable SYCL
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 62fe463..fcc4e69 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -41,6 +41,7 @@ endif(ENABLE_CUDA)
+ if(ENABLE_HIP)
+   set_source_files_properties(${DEVICE_SOURCE_FILES} PROPERTIES LANGUAGE HIP)
+   set_property(TARGET librett PROPERTY HIP_ARCHITECTURES gfx906 gfx908)
++  target_link_libraries(librett hip::host)
+ endif(ENABLE_HIP)
+ 
+ if(ENABLE_UMPIRE)

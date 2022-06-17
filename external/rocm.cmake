@@ -38,6 +38,6 @@ find_package(hip REQUIRED)
 include(external/umpire.cmake)
 
 ##
-## cuTT
+## LibreTT
 ##
-include(external/cutt.cmake)
+include(external/librett.cmake)
